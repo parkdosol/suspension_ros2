@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
     wget \
     vim \
     tree \
+    x11-apps \
+    gazebo11 \
+    ros-foxy-gazebo-ros-pkgs \
     && rm -rf /var/lib/apt/lists/*
 
 # Bash 프롬프트를 설정 (노란색 텍스트, 파란색 파일 경로)
@@ -26,7 +29,9 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # 환경 변수 설정
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    ROS_DISTRO=foxy
+    ROS_DISTRO=foxy \
+    DISPLAY=${DISPLAY} \
+    QT_X11_NO_MITSHM=1
 
 # ROS 2 작업 공간 생성 및 설정
 RUN mkdir -p /root/suspension_ros2/src
