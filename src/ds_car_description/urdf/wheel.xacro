@@ -7,16 +7,16 @@
         <geometry>
           <cylinder length="0.1" radius="0.2"/>  <!-- 바퀴 크기 -->
         </geometry>
-        <material name="black"/>
+        <material name="dark_red"/>  <!-- 바퀴 색상 변경 -->
       </visual>
     </link>
 
-    <!-- 바퀴를 차체와 연결 -->
+    <!-- 바퀴를 차체와 수직으로 연결 -->
     <joint name="${name}_joint" type="continuous">
       <parent link="${parent}"/>
       <child link="${name}"/>
-      <origin xyz="${x_pos} ${y_pos} -0.2"/>  <!-- 바퀴 위치 조정 -->
-      <axis xyz="0 1 0"/>
+      <origin xyz="${x_pos} ${y_pos} -0.2" rpy="1.57 0 0"/>  <!-- 바퀴를 수직으로 회전 -->
+      <axis xyz="0 0 1"/>  <!-- z축 기준으로 회전 -->
     </joint>
   </xacro:macro>
 
