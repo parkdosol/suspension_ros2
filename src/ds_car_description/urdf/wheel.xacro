@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="wheel" params="name parent x_pos y_pos">
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <cylinder length="0.1" radius="0.2"/>  <!-- 바퀴 크기 -->
+        </geometry>
+        <material name="black"/>
+      </visual>
+    </link>
+
+    <!-- 바퀴를 차체와 연결 -->
+    <joint name="${name}_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${name}"/>
+      <origin xyz="${x_pos} ${y_pos} -0.2"/>  <!-- 바퀴 위치 조정 -->
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot name="ds_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- 차체 (Chassis) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="1.5 1.0 0.5"/>  <!-- 크기: x=1.5m, y=1.0m, z=0.5m -->
+      </geometry>
+      <material name="gray"/>
+    </visual>
+  </link>
+
+  <!-- 네 개의 바퀴 -->
+  <xacro:include filename="$(find ds_car_description)/urdf/wheel.xacro"/>
+  <xacro:wheel name="front_left_wheel" parent="base_link" x_pos="0.7" y_pos="0.4"/>
+  <xacro:wheel name="front_right_wheel" parent="base_link" x_pos="0.7" y_pos="-0.4"/>
+  <xacro:wheel name="rear_left_wheel" parent="base_link" x_pos="-0.7" y_pos="0.4"/>
+  <xacro:wheel name="rear_right_wheel" parent="base_link" x_pos="-0.7" y_pos="-0.4"/>
+
+  <!-- 서스펜션 추가 -->
+  <xacro:include filename="$(find ds_car_description)/urdf/suspension.xacro"/>
+  <xacro:suspension wheel="front_left_wheel" parent="base_link"/>
+  <xacro:suspension wheel="front_right_wheel" parent="base_link"/>
+  <xacro:suspension wheel="rear_left_wheel" parent="base_link"/>
+  <xacro:suspension wheel="rear_right_wheel" parent="base_link"/>
+
+</robot>
