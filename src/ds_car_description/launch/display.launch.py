@@ -23,6 +23,31 @@ def generate_launch_description():
             }]
         ),
         Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            arguments=["0", "0", "0", "0", "0", "0", "world", "base_link"]
+        ),
+        Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            arguments=["0.7", "0.4", "-0.2", "0", "0", "0", "base_link", "front_left_wheel"]
+        ),
+        Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            arguments=["0.7", "-0.4", "-0.2", "0", "0", "0", "base_link", "front_right_wheel"]
+        ),
+        Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            arguments=["-0.7", "0.4", "-0.2", "0", "0", "0", "base_link", "rear_left_wheel"]
+        ),
+        Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            arguments=["-0.7", "-0.4", "-0.2", "0", "0", "0", "base_link", "rear_right_wheel"]
+        ),
+        Node(
             package="rviz2",
             executable="rviz2",
             name="rviz2",
