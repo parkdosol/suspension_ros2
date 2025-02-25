@@ -36,6 +36,37 @@
           </script>
         </material>
       </visual>
+
+      <sensor name="imu_sensor" type="imu">
+        <update_rate>50</update_rate>
+        <imu>
+          <!-- 기본값들은 센서의 오차나 노이즈를 고려해 조정할 수 있습니다. -->
+          <angular_velocity>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+          </linear_acceleration>
+          <orientation>
+            <x>0</x>
+            <y>0</y>
+            <z>0</z>
+            <w>1</w>
+          </orientation>
+        </imu>
+        <plugin name="gazebo_ros_imu" filename="libgazebo_ros_imu.so">
+          <ros>
+            <namespace>/ds_car</namespace>
+            <remapping>imu:=imu/data</remapping>
+          </ros>
+          <!-- 추가 파라미터 (옵션) -->
+          <update_rate>50</update_rate>
+        </plugin>
+      </sensor>
     </link>
     
     <link name="susp_front_right">
@@ -444,6 +475,7 @@
       <right_joint>wheel_rear_right_spin</right_joint>
       <wheel_separation>0.6</wheel_separation>
       <wheel_radius>0.15</wheel_radius>
+      <wheel_diameter>0.3</wheel_diameter>
       <update_rate>50</update_rate>
       <publish_wheel_tf>true</publish_wheel_tf>
       <publish_odometry>true</publish_odometry>
@@ -452,9 +484,34 @@
       <robot_base_frame>chassis</robot_base_frame>
     </plugin>
     
+    <link name="depth_camera_link">
+      <pose>0.6 0 0.35 0 0 0</pose> <!-- 차량 앞부분 -->
+      <sensor name="depth_camera_sensor" type="depth">
+        <update_rate>10</update_rate>
+        <camera>
+          <horizontal_fov>1.57</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+        </camera>
+        <plugin name="gazebo_ros_camera" filename="libgazebo_ros_camera.so">
+          <ros>
+            <namespace>/ds_car</namespace>
+            <remapping>image_raw:=depth_camera/image_raw</remapping>
+          </ros>
+        </plugin>
+      </sensor>
+    </link>
+
     <link name="lidar_link">
       <pose>0.6 0 0.25 0 0 0</pose> <!-- 차체 앞부분 -->
-      <sensor name="lidar_sensor" type="gpu_lidar">
+      <sensor name="lidar_sensor" type="ray">
         <update_rate>10</update_rate>
         <ray>
           <scan>
@@ -505,6 +562,35 @@
       </plugin>
     </sensor>
   </link>
+
+  <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+    <ros>
+      <namespace>/ds_car</namespace>
+      <remapping>joint_states:=/ds_car/joint_states</remapping>
+    </ros>
+    <joint_name>susp_front_right_prismatic</joint_name>
+    <joint_name>susp_front_left_prismatic</joint_name>
+    <joint_name>susp_rear_right_prismatic</joint_name>
+    <joint_name>susp_rear_left_prismatic</joint_name>
+  </plugin>
+
+  <plugin name="gazebo_ros_diff_drive" filename="libgazebo_ros_diff_drive.so">
+  <ros>
+      <namespace>/ds_car</namespace>
+      <remapping>odom:=odom</remapping>
+  </ros>
+  <left_joint>wheel_rear_left_spin</left_joint>
+  <right_joint>wheel_rear_right_spin</right_joint>
+  <wheel_separation>0.6</wheel_separation>
+  <wheel_radius>0.15</wheel_radius>
+  <wheel_diameter>0.3</wheel_diameter>
+  <update_rate>50</update_rate>
+  <publish_wheel_tf>true</publish_wheel_tf>
+  <publish_odometry>true</publish_odometry>
+  <odometry_topic>/ds_car/odom</odometry_topic>
+  <odometry_frame>odom</odometry_frame>
+  <robot_base_frame>chassis</robot_base_frame>
+</plugin>
 
 
   </model>

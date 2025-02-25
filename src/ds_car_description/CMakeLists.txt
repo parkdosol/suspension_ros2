@@ -32,4 +32,10 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+# Python 실행 파일 설치 (실행 가능한 노드 등록)
+install(PROGRAMS
+  src/suspension_publisher.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()

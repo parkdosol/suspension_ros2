@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="eve_sim_world">
+  
+    <!-- 물리 엔진 설정 (예: ODE) -->
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- 지면 모델 (예: grass_plane) -->
+    <include>
+      <uri>model://grass_plane</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+    
+    <!-- 스피드 범프 모델 -->
+    <include>
+      <uri>model://speed_bump</uri>
+      <pose>10 0 0 0 0 0</pose> <!-- 원하는 위치 및 오리엔테이션으로 수정 -->
+    </include>
+
+    <!-- 차량 모델 (예: ds_car) -->
+    <include>
+      <uri>model://ds_car</uri>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    <!-- 기본 조명 (sun) -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+    <!-- GUI 설정 (선택 사항) -->
+    <gui>
+      <camera name="user_camera">
+        <pose>0 -15 10 0.2 0 0</pose>
+      </camera>
+    </gui>
+    
+  </world>
+</sdf>
