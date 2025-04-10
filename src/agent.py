@@ -71,15 +71,15 @@ class SuspensionAgent(Node):
 
         self.lidar_data = None
 
-        # ========================== 데이터 송수신 함수 정의  ==========================
+    # ========================== 데이터 송수신 함수 정의  ==========================
 
-        # Subscriber, 데이터 수신 (ROS2 -> Agent)
-        # 이 콜백 함수들은 ROS2 퍼블리셔가 메시지를 보낼 때(ROS2 -> Agent) ROS2 시스템에서 자동으로 호출됨
+    # Subscriber, 데이터 수신 (ROS2 -> Agent)
+    # 이 콜백 함수들은 ROS2 퍼블리셔가 메시지를 보낼 때(ROS2 -> Agent) ROS2 시스템에서 자동으로 호출됨
 
-        # Lidar 데이터 수신 콜백 함수
-        def lidar_callback(self, msg):
-            lidar_data = np.array(msg.ranges[:160])  # Lidar 데이터를 160개의 값으로 자르고 numpy 배열로 변환
-            self.env.update_lidar_data(lidar_data)  # 환경 객체로 데이터 전달
+    # Lidar 데이터 수신 콜백 함수
+    def lidar_callback(self, msg):
+        lidar_data = np.array(msg.ranges[:160])  # Lidar 데이터를 160개의 값으로 자르고 numpy 배열로 변환
+        self.env.update_lidar_data(lidar_data)  # 환경 객체로 데이터 전달
 
 
     # Vertical acceleration 수신 콜백 함수 (ROS2 -> Agent)
